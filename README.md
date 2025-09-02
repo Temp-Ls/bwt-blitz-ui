@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Binary-Safe BWT Compression Tool
 
-## Project info
+A complete React application implementing the Burrows-Wheeler Transform (BWT) compression pipeline with binary-safe processing for text, files, and images.
 
-**URL**: https://lovable.dev/projects/fbbc0dfb-5ff2-4902-86c9-9ffd6a93c3a7
+## Features
 
-## How can I edit this code?
+- **Binary-Safe Processing**: All algorithms operate on Uint8Array internally
+- **Complete BWT Pipeline**: BWT → Move-to-Front → Run-Length Encoding  
+- **Universal Input Support**: Text, documents, and images
+- **Serialization Format**: Custom BWTJS1 format with metadata
+- **Browser Storage**: Save/load compressed files from localStorage
+- **Real-time Stats**: Compression ratios, processing times, file info
 
-There are several ways of editing your application.
+## Quick Start
 
-**Use Lovable**
+```bash
+# Install dependencies
+npm install
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fbbc0dfb-5ff2-4902-86c9-9ffd6a93c3a7) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Run tests
+npm test
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## Architecture
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Algorithms (src/algorithms/)
+- `bwt.js` - Binary-safe Burrows-Wheeler Transform
+- `mtf.js` - Move-to-Front with 256-byte alphabet  
+- `rle.js` - Run-Length Encoding with escape sequences
+- `pipeline.js` - Complete compression pipeline
+- `serialization.js` - BWTJS1 binary format
 
-**Use GitHub Codespaces**
+### File Format
+```
+Magic Header: "BWTJS1\0" (7 bytes)
+Metadata Length: 4-byte big-endian uint32  
+JSON Metadata: UTF-8 encoded metadata
+Binary Payload: Compressed data
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Testing
+Comprehensive test suite covering:
+- Unit tests for each algorithm
+- Binary safety validation  
+- Roundtrip integrity tests
+- UI integration tests
+- Serialization format compliance
 
-## What technologies are used for this project?
+## Usage
 
-This project is built with:
+1. **Input**: Choose text, file, or image input
+2. **Compress**: Process through BWT pipeline
+3. **Download**: Save as .bwt file
+4. **Upload**: Load .bwt files for decompression
+5. **Verify**: Test roundtrip integrity
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Technical Details
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/fbbc0dfb-5ff2-4902-86c9-9ffd6a93c3a7) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **Binary Safety**: Preserves exact byte sequences
+- **UTF-8 Support**: Proper text encoding/decoding
+- **Error Handling**: Graceful failure recovery
+- **Performance**: Optimized for browser environment
+- **Compatibility**: Modern browsers with ES6+ support
